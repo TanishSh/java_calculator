@@ -4,7 +4,7 @@
  * Purpose: to ask simple arithmetic question to the user in random, and the check the answer
  */
 
-package calculator;
+package java_calculator;
 import java.util.*;
 
 
@@ -15,6 +15,9 @@ public class Math {
 		boolean run = true; // program keeps running until user wants it
 		
 		Random random = new Random(); // init random for the program
+		
+		// init scanner object
+		Scanner input = new Scanner(System.in);
 
 		// program loop
 		while(run) {
@@ -32,8 +35,7 @@ public class Math {
 			System.out.println("The value of " + num1 + " " + operator + " " + num2 + ":");
 			
 			// take the answer from the user
-			Scanner input = new Scanner(System.in);
-			double userInput = input.nextInt();
+			double userInput = input.nextDouble();
 			
 			// this line is important to avoid errors
 			// add this line to skip new line
@@ -66,30 +68,40 @@ public class Math {
 			while(prompt) {
 				System.out.println("Do you want to exit? y/n: ");
 				
-				// way to get char input (y/n)
+				// way to get char (indexed 0) input (y/n) from a string
+				char userAnswer = input.next().charAt(0);
 				
-				String userAnswer = input.nextLine();
-				userAnswer = userAnswer.toLowerCase();
-				userAnswer = userAnswer.replaceAll("\\s+", "");
+				// convert char to lowercase
+				userAnswer = Character.toLowerCase(userAnswer);
+				
+				// stores an int value based on the comparison between the desired and the input char
+				int compareToY = Character.compare('y', userAnswer);
+				int compareToN = Character.compare('n', userAnswer);
 				
 				// if run is false, main loop stops
 				// if prompt is false, no more prompting
-				if(userAnswer.equals 'y') {
+				if(compareToY == 0) {
 					run = false;
 					prompt = false; // prompt false, only if valid input is given
 				}
-				else if(userAnswer == 'n'){
+				
+				else if(compareToN == 0){
 					run = true;
-					prompt=false;
+					prompt = false;
 				}
 				else {
 					System.out.println("Error. Wrong input!");
 				}
+				
 			}
-			
-			input.close();
+			// consume carriage return ("\r") from string before taking an int input
+			// causes error otherwise
+			String str = input.nextLine();
 			
 		}
+		
+		input.close();
+		
 		System.out.println("End!");
 		
 	}
